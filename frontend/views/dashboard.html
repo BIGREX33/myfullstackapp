@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MentorAI | Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="shortcut icon" href="mentor-ai-icon.png" type="image/x-icon">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3 class="logo">MentorAI</h3>
+                <i class="fa-solid fa-times sidebar-close" id="sidebar-close"></i>
+            </div>
+            <div class="sidebar-user">
+                <div class="user-avatar">
+                    <img src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740" alt="User Avatar">
+                </div>
+                <div class="user-info">
+                    <h4 id="user-name">John Doe</h4>
+                    <p id="user-role">Student</p>
+                </div>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="active">
+                    <a href="#dashboard"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="#career-path"><i class="fa-solid fa-road"></i> Career Path</a>
+                </li>
+                <li>
+                    <a href="#my-mentors"><i class="fa-solid fa-users"></i> My Mentors</a>
+                </li>
+                <li>
+                    <a href="#learning"><i class="fa-solid fa-graduation-cap"></i> Learning</a>
+                </li>
+                <li>
+                    <a href="#portfolio"><i class="fa-solid fa-file-alt"></i> Portfolio</a>
+                </li>
+                <li>
+                    <a href="#analytics"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+                </li>
+                <li>
+                    <a href="#settings"><i class="fa-solid fa-gear"></i> Settings</a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#help"><i class="fa-solid fa-circle-question"></i> Help Center</a>
+                <a href="/logout"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Top Navigation -->
+            <header class="top-navbar">
+                <div class="nav-left">
+                    <i class="fa-solid fa-bars sidebar-toggle" id="sidebar-toggle"></i>
+                    <h2>Dashboard</h2>
+                </div>
+                <div class="nav-right">
+                    <div class="search-box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    <div class="notification-bell">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="notification-count" id="notification-count">3</span>
+                    </div>
+                    <div class="message-inbox">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span class="message-count" id="message-count">5</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Welcome Section -->
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            <h1>Welcome back, <span id="welcome-user-name">John</span>!</h1>
+                            <p>Here's what's happening with your mentorship journey today.</p>
+                        </div>
+                        <div class="ai-assistant">
+                            <button class="ai-button">
+                                <i class="fa-solid fa-robot"></i>
+                                Ask AI Assistant
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Stats Cards -->
+                <section class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-solid fas fa-spinner"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Skills Progress</h3>
+                            <h2 id="skills-progress">68%</h2>
+                            <p><span class="positive-change">+5%</span> since last month</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Sessions Completed</h3>
+                            <h2 id="sessions-completed">12</h2>
+                            <p><span class="positive-change">+3</span> this week</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-certificate"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Achievements</h3>
+                            <h2 id="achievements-count">8</h2>
+                            <p><span class="neutral-change">New badge unlocked!</span></p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Goals Completed</h3>
+                            <h2 id="goals-completed">5/10</h2>
+                            <p><span class="positive-change">50%</span> completion rate</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Career Path and Recommendations -->
+                <div class="split-section">
+                    <!-- Career Path -->
+                    <section class="career-path">
+                        <div class="section-header">
+                            <h2>Your Career Path</h2>
+                            <button class="view-all-btn">View Details</button>
+                        </div>
+                        <div class="career-progress">
+                            <div class="career-progress-bar">
+                                <div class="progress-bar-fill" id="career-progress-fill" style="width: 65%;"></div>
+                            </div>
+                            <div class="career-milestones">
+                                <div class="milestone completed">
+                                    <div class="milestone-icon">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                    <p>Skills Assessment</p>
+                                </div>
+                                <div class="milestone completed">
+                                    <div class="milestone-icon">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                    <p>Career Options</p>
+                                </div>
+                                <div class="milestone active">
+                                    <div class="milestone-icon">
+                                        <i class="fa-solid fa-spinner"></i>
+                                    </div>
+                                    <p>Skill Building</p>
+                                </div>
+                                <div class="milestone">
+                                    <div class="milestone-icon">
+                                        <i class="fa-solid fa-lock"></i>
+                                    </div>
+                                    <p>Internship</p>
+                                </div>
+                                <div class="milestone">
+                                    <div class="milestone-icon">
+                                        <i class="fa-solid fa-lock"></i>
+                                    </div>
+                                    <p>Job Ready</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Recommendations -->
+                    <section class="recommendations">
+                        <div class="section-header">
+                            <h2>Personalized Recommendations</h2>
+                            <button class="view-all-btn">See All</button>
+                        </div>
+                        <div class="recommendation-cards" id="recommendation-cards">
+                            <div class="recommendation-card">
+                                <div class="recommendation-tag course">Course</div>
+                                <h3>Introduction to Web Development</h3>
+                                <p>Boost your frontend skills with this beginner-friendly course.</p>
+                                <div class="recommendation-footer">
+                                    <span class="recommendation-meta"><i class="fa-solid fa-clock"></i> 4 weeks</span>
+                                    <button class="recommendation-btn">Start Now</button>
+                                </div>
+                            </div>
+                            <div class="recommendation-card">
+                                <div class="recommendation-tag mentor">Mentor</div>
+                                <h3>Sarah Johnson</h3>
+                                <p>Senior Developer at Google with 8+ years of experience.</p>
+                                <div class="recommendation-footer">
+                                    <span class="recommendation-meta"><i class="fa-solid fa-star"></i> 4.9/5</span>
+                                    <button class="recommendation-btn">Connect</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Upcoming Sessions -->
+                <section class="upcoming-sessions">
+                    <div class="section-header">
+                        <h2>Upcoming Sessions</h2>
+                        <button class="view-all-btn">View Calendar</button>
+                    </div>
+                    <div class="sessions-list" id="sessions-list">
+                        <div class="session-card">
+                            <div class="session-date">
+                                <h3>15</h3>
+                                <p>MAY</p>
+                            </div>
+                            <div class="session-details">
+                                <h3>Career Guidance Session</h3>
+                                <p><i class="fa-solid fa-user"></i> with <span class="mentor-name">Mark Wilson</span></p>
+                                <p><i class="fa-solid fa-clock"></i> 3:00 PM - 4:00 PM</p>
+                            </div>
+                            <div class="session-actions">
+                                <button class="session-btn primary">Join</button>
+                                <button class="session-btn secondary">Reschedule</button>
+                            </div>
+                        </div>
+                        <div class="session-card">
+                            <div class="session-date">
+                                <h3>18</h3>
+                                <p>MAY</p>
+                            </div>
+                            <div class="session-details">
+                                <h3>Resume Review</h3>
+                                <p><i class="fa-solid fa-user"></i> with <span class="mentor-name">Emily Chen</span></p>
+                                <p><i class="fa-solid fa-clock"></i> 5:30 PM - 6:30 PM</p>
+                            </div>
+                            <div class="session-actions">
+                                <button class="session-btn primary">Join</button>
+                                <button class="session-btn secondary">Reschedule</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Skills & Learning -->
+                <div class="split-section">
+                    <!-- Skills Progress -->
+                    <section class="skills-progress">
+                        <div class="section-header">
+                            <h2>Skills Progress</h2>
+                            <button class="view-all-btn">All Skills</button>
+                        </div>
+                        <div class="skills-list" id="skills-list">
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <h3>Web Development</h3>
+                                    <span>75%</span>
+                                </div>
+                                <div class="skill-progress-bar">
+                                    <div class="skill-progress-fill" style="width: 75%;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <h3>UI/UX Design</h3>
+                                    <span>60%</span>
+                                </div>
+                                <div class="skill-progress-bar">
+                                    <div class="skill-progress-fill" style="width: 60%;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <h3>Project Management</h3>
+                                    <span>45%</span>
+                                </div>
+                                <div class="skill-progress-bar">
+                                    <div class="skill-progress-fill" style="width: 45%;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <h3>Data Analysis</h3>
+                                    <span>80%</span>
+                                </div>
+                                <div class="skill-progress-bar">
+                                    <div class="skill-progress-fill" style="width: 80%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Learning Resources -->
+                    <section class="learning-resources">
+                        <div class="section-header">
+                            <h2>Learning Resources</h2>
+                            <button class="view-all-btn">Browse Library</button>
+                        </div>
+                        <div class="resources-grid" id="resources-grid">
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fa-solid fa-book"></i>
+                                </div>
+                                <div class="resource-info">
+                                    <h3>Advanced JavaScript</h3>
+                                    <p>Enhance your JS skills with practical examples</p>
+                                    <div class="resource-meta">
+                                        <span><i class="fa-solid fa-clock"></i> 2 hours</span>
+                                        <button class="resource-btn">View</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fa-solid fa-video"></i>
+                                </div>
+                                <div class="resource-info">
+                                    <h3>Interview Preparation</h3>
+                                    <p>Tips and tricks for technical interviews</p>
+                                    <div class="resource-meta">
+                                        <span><i class="fa-solid fa-clock"></i> 45 mins</span>
+                                        <button class="resource-btn">View</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Recent Activity -->
+                <section class="recent-activity">
+                    <div class="section-header">
+                        <h2>Recent Activity</h2>
+                        <button class="view-all-btn">View All</button>
+                    </div>
+                    <div class="activity-timeline" id="activity-timeline">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fa-solid fa-certificate"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h3>Earned a Certificate</h3>
+                                <p>You completed "Python for Data Science" and earned a certificate.</p>
+                                <span class="activity-time">2 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fa-solid fa-comment"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h3>New Mentor Feedback</h3>
+                                <p>Mark Wilson left feedback on your recent project.</p>
+                                <span class="activity-time">Yesterday</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fa-solid fa-file-alt"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h3>Resume Updated</h3>
+                                <p>You updated your resume with new skills and experience.</p>
+                                <span class="activity-time">2 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Footer -->
+            <footer class="dashboard-footer">
+                <div class="footer-content">
+                    <p>&copy; <span id="year"></span> MentorAI. All Rights Reserved.</p>
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Contact Support</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Current year for footer
+        document.getElementById('year').innerHTML = new Date().getFullYear();
+
+        // Sidebar toggle functionality
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebarClose = document.getElementById('sidebar-close');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        sidebarClose.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+        });
+
+        // Example of how to populate data from backend
+        // This is where you would make fetch calls to your API endpoints
+        function populateDashboardData() {
+        
+             fetch('/user/profile').then(response => response.json()).then(data => {
+               document.getElementById('user-name').textContent = `${data.name}`;
+               document.getElementById('welcome-user-name').textContent = data.name;
+               document.getElementById('user-role').textContent = data.role;
+            });
+
+         
+         fetch('/user/stats').then(response => response.json()).then(data => {
+               document.getElementById('skills-progress').textContent = data.skillsProgress + '%';
+               document.getElementById('sessions-completed').textContent = data.sessionsCompleted;
+               document.getElementById('achievements-count').textContent = data.achievementsCount;
+               document.getElementById('goals-completed').textContent = data.goalsCompleted + '/' + data.totalGoals;
+             });
+
+            // Same approach for recommendations, sessions, skills, resources, and activity
+        }
+
+        // Call the function to populate data when page loads
+        document.addEventListener('DOMContentLoaded', populateDashboardData);
+    </script>
+</body>
+</html>

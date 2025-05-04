@@ -1,0 +1,13 @@
+# Ignore frontend dependencies
+/frontend/node_modules/
+
+# Ignore backend dependencies
+/Backend/node_modules/
+
+# Ignore environment variables
+**/.env
+
+# Optional: Ignore logs and build artifacts
+**/logs/
+**/dist/
+*.log
