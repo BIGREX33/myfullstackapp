@@ -73,7 +73,7 @@ body {
     left: 0;
     width: 100%;
     padding: 15px 200px;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.021);
     backdrop-filter: blur(10px);
     z-index: 999;
     height: 4.5rem;
@@ -133,11 +133,11 @@ body {
     color: white;
     background: linear-gradient(90deg, var(--secondary-color), var(--tertiary-color));
     padding: 0.6rem 1.5rem;
-    border-radius: 30px;
+    border-radius: 10px;
     font-weight: 500;
     text-decoration: none;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(244, 0, 124, 0.25);
+   
 }
 
 .link-btn:hover {
@@ -154,18 +154,32 @@ body {
 /* Hero Section */
 .hero-section {
     display: flex;
-    max-width: 1200px;
+    max-width: 100%;
+    
     margin: 0 auto;
-    padding: 9rem 1rem 1rem;
+    padding: 9rem 1rem 5rem;
     gap: 3rem;
+    flex-direction: column;
+    text-align: center;
     align-items: center;
     justify-content: space-between;
+    background: url('study-group-african-people.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
 
 }
 
 .hero-content {
     flex: 1;
-    max-width: 600px;
+    max-width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .hero-content h1 {
@@ -173,6 +187,7 @@ body {
     font-weight: 600;
     line-height: 1.2;
     margin-bottom: 1.5rem;
+    color: #fff;
 }
 
 .gradient-text {
@@ -186,14 +201,14 @@ body {
 .hero-subtitle {
     font-size: 1.25rem;
     line-height: 1.5;
-    color: #4B5563;
+    color: #ffffff;
     margin-bottom: 1.5rem;
     font-weight: 400;
 }
 
 .highlight {
     background-color: rgba(254, 161, 58, 0.15);
-    color: #333;
+    color: #ffffff;
     padding: 0.75rem 1.25rem;
     border-radius: 8px;
     display: inline-block;
@@ -209,11 +224,7 @@ body {
 }
 
 .hero-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    width: 60%;
-    margin: 0% auto;
+    display: none;
   
 }
 
@@ -221,6 +232,7 @@ body {
     background: linear-gradient(90deg, var(--secondary-color), var(--tertiary-color));
     color: white;
     border: none;
+    margin-top: 4rem;
     padding: 0.9rem 2rem;
     border-radius: 30px;
     font-size: 1rem;
@@ -698,6 +710,7 @@ footer {
         right: 20px;
         color: white;
     }
+    
     .hero-image img {
         display: none;
     }

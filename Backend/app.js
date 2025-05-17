@@ -57,12 +57,8 @@ const userSchema = new mongoose.Schema({
     enum: ["mentor", "student"],
     default: "student",
   },
-});
-
-const sessionSchema = new mongoose.Schema({
-  date: Date,
-  userId: String,
-  sessionUserna: String,
+  courses: [String],
+  contact: [String],
 });
 
 const User = mongoose.model("User", userSchema);
@@ -82,7 +78,6 @@ app.use((req, res, next) => {
   }
   next();
 });
-
 // Routes
 app.get("/", (req, res) => {
   res.sendFile(homePage);
@@ -90,7 +85,14 @@ app.get("/", (req, res) => {
 
 const conversationHistory = {};
 app.post("/register", async (req, res) => {
-  const { username, email, password, role } = req.body;
+  const { username, email, password, role, courses, contact } = req.body;
+  console.log(courses)
+  // Check if all required fields are provided
+  if (!username || !email || !password || !role || !courses || !contact) {
+    return res.status(400).json({
+      message: "Username, email, password, role, and courses are required",
+    });
+  }
 
   // Check if the email already exists
   const userByEmail = await User.findOne({ email });
@@ -106,7 +108,15 @@ app.post("/register", async (req, res) => {
 
   // If username and email are unique, continue with registration
   const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = new User({ username, email, password: hashedPassword, role });
+  const newUser = new User({
+    username,
+    email,
+    password: hashedPassword,
+    role,
+    courses: courses,
+    contact: contact.split(","),
+  });
+
   await newUser.save();
   res.status(201).json({ message: "User registered successfully" });
 });
@@ -138,9 +148,6 @@ app.post("/login", async (req, res) => {
     .json({ success: true, message: "Login successful", role: user.role });
 });
 
-app.post("/askfromai", (req, res) => {
-  const { messagebody } = req.body;
-});
 app.get("/dashboard", isAuthenticated, (req, res) => {
   const userRole = req.session.user.role;
 
@@ -217,69 +224,76 @@ app.get("/user/profile", isAuthenticated, (req, res) => {
   try {
     const user = req.session.user;
     if (!user) throw new Error("User data not found in session");
-    res.status(200).json({ name: user.username, role: user.role });
+    res
+      .status(200)
+      .json({ success: true, name: user.username, role: user.role });
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch user profile" });
   }
 });
 
-app.get("/my-mentors", (req, res) => {
+app.get("/my-mentors",isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/views/mentor-matching.html"));
 });
 
 // POST /findmentors
-app.post("/findmentors", async (req, res) => {
+app.post("/findmentors", isAuthenticated, async (req, res) => {
   try {
     const user = req.session.user;
-    if (!user || !user.username) {
+    if (!user || !user.username || user.role !== "student") {
       return res.status(401).json({
         success: false,
-        message: "Authentication required"
-      }); 
+        message: "Authentication required for students",
+      });
     }
 
-    const { courses } = req.body; // Expecting an array directly
-    if (!courses || !Array.isArray(courses) || courses.length === 0) {
+    const studentCourses = user.courses;
+
+    if (
+      !studentCourses ||
+      !Array.isArray(studentCourses) ||
+      studentCourses.length === 0
+    ) {
       return res.status(400).json({
         success: false,
-        message: "Courses array is required and must not be empty"
+        message: "Your selected courses are empty. Please update your profile.",
       });
     }
 
     const mentors = await User.find({
       role: "mentor",
-      courses: { $in: courses } // Find mentors who have any of the requested courses
+      courses: { $in: studentCourses }, // Find mentors who teach at least one of the student's courses
     });
 
     if (mentors.length === 0) {
       return res.json({
         success: false,
-        message: "No mentors found for the provided courses"
+        message: "No mentors found for your selected courses.",
       });
     }
 
     res.json({
       success: true,
-      message: "Mentors found matching the courses",
-      mentors
+      message: "Mentors found matching your interests.",
+      mentors,
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: "Server error while finding mentors"
+      message: "Server error while finding mentors.",
     });
   }
 });
 
 // POST /findstudents
-app.post('/findstudents', async (req, res) => {
+app.post("/findstudents", async (req, res) => {
   try {
     const user = req.session.user;
     if (!user || !user.username) {
       return res.status(401).json({
         success: false,
-        message: "Authentication required"
+        message: "Authentication required",
       });
     }
 
@@ -287,32 +301,32 @@ app.post('/findstudents', async (req, res) => {
     if (!courses || !Array.isArray(courses) || courses.length === 0) {
       return res.status(400).json({
         success: false,
-        message: "Courses array is required and must not be empty"
+        message: "Courses array is required and must not be empty",
       });
     }
 
     const students = await User.find({
       role: "student",
-      courses: { $in: courses }
+      courses: { $in: courses },
     });
 
     if (students.length === 0) {
       return res.json({
         success: false,
-        message: "No students found for the provided courses"
+        message: "No students found for the provided courses",
       });
     }
 
     res.json({
       success: true,
       message: "Students found matching the courses",
-      students
+      students,
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: "Server error while finding students"
+      message: "Server error while finding students",
     });
   }
 });
@@ -324,6 +338,93 @@ app.get("/logout", (req, res) => {
   });
 });
 
+// Get user profile
+app.get("/api/user/profile", isAuthenticated, async (req, res) => {
+  try {
+    const user = req.session.user;
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Not authenticated",
+      });
+    }
+
+    // Get fresh user data from database
+    const userData = await User.findOne({ username: user.username });
+    if (!userData) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    res.json({
+      success: true,
+      user: {
+        username: userData.username,
+        email: userData.email,
+        role: userData.role,
+        courses: userData.courses,
+        contact: userData.contact,
+      },
+    });
+  } catch (error) {
+    console.error("Error getting user profile:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error while getting user profile",
+    });
+  }
+});
+app.post("/search-mentors", isAuthenticated, async (req, res) => {
+  try {
+    const { searchQuery } = req.body;
+
+    if (!searchQuery) {
+      return res.status(400).json({
+        success: false,
+        message: "Search query is required",
+      });
+    }
+
+    const query = { role: "mentor" };
+    const searchRegex = { $regex: new RegExp(searchQuery, "i") };
+    let mentors;
+
+    // Try searching by username first
+    mentors = await User.find({ ...query, username: searchRegex }).select(
+      "-password"
+    );
+
+    // If no mentors found by username, try searching by course
+    if (mentors.length === 0) {
+      const courseSearchMentors = await User.find({
+        ...query,
+        courses: searchRegex,
+      }).select("-password");
+
+      mentors = courseSearchMentors;
+    }
+
+    if (mentors.length === 0) {
+      return res.json({
+        success: false,
+        message: "No mentors found matching your search",
+      });
+    }
+
+    res.json({
+      success: true,
+      mentors: mentors,
+    });
+  } catch (error) {
+    console.error("Error searching mentors:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error searching mentors",
+    });
+  }
+});
 app.listen(port, () =>
   console.log(`Server running on http://localhost:${port}`)
 );
